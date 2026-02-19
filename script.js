@@ -1,4 +1,4 @@
-// Data for nascon-2026
+// 1. DATA DEFINITIONS
 const menuItems = [
     { title: "Agenda", icon: "📅" },
     { title: "Speakers", icon: "👤" },
@@ -8,44 +8,47 @@ const menuItems = [
 ];
 
 const speakers = [
-    { name: 'Francis Kong', tag: 'Keynote Speaker', bio: 'Francisco J. Kong is a multi-awarded business speaker...', img: 'https://via.placeholder.com/150', topic: 'The Invisible World' },
-    { name: 'Hon. David L. Almirol, Jr.', tag: 'DICT Undersecretary', bio: 'Ten Outstanding Young Men (TOYM) awardee...', img: 'https://ucarecdn.com/68f87f36-eeab-4c7d-87f3-e15a348c40ab/', topic: 'Industry Disruptors' }
-    // Add other speakers here...
+    { 
+        name: 'Francis Kong', 
+        tag: 'Keynote Speaker', 
+        bio: 'Francisco J. Kong is a multi-awarded business speaker...', 
+        img: 'https://via.placeholder.com/150', 
+        topic: 'The Invisible World' 
+    },
+    { 
+        name: 'Hon. David L. Almirol, Jr.', 
+        tag: 'DICT Undersecretary', 
+        bio: 'Ten Outstanding Young Men (TOYM) awardee...', 
+        img: 'https://ucarecdn.com/68f87f36-eeab-4c7d-87f3-e15a348c40ab/', 
+        topic: 'Industry Disruptors' 
+    }
 ];
 
-const infoData = {
-    "Agenda": `
-        <div class="switcher-pill">
-            <div id="btn-day1" class="pill-btn" style="background: var(--converge-teal); color: white;" onclick="switchDay(1)">DAY 1</div>
-            <div id="btn-day2" class="pill-btn" style="color: #64748b;" onclick="switchDay(2)">DAY 2</div>
-        </div>
-        <div id="agenda-list">08:00 AM - Registration</div>
-    `,
-    "How to get there": `
-        <p><strong>Venue:</strong> SMX Convention Center, Manila</p>
-        <p>Grab/Taxi: Pin to "SMX Convention Center Main Lobby".</p>
-        <div style="width:100%; height:200px; background:#eee; border-radius:15px; display:flex; align-items:center; justify-content:center;">[Map Placeholder]</div>
-    `,
-    "Experience Zone": `
-        <p>Visit the following booths for interactive demos:</p>
-        <ul>
-            <li>AI Future Hub</li>
-            <li>Connectivity Lounge</li>
-            <li>Gaming Arena</li>
-        </ul>
-    `,
-    "Prepare for the event": `
-        <p><strong>Dress Code:</strong> Smart Casual</p>
-        <p><strong>What to bring:</strong></p>
-        <ul>
-            <li>Digital Ticket (QR Code)</li>
-            <li>Power Bank</li>
-            <li>Business Cards</li>
-        </ul>
-    `
+const agendaEvents = {
+    "reg": { 
+        time: "08:00 AM", 
+        title: "Registration & Morning Coffee", 
+        desc: "Pick up your badges at the main lobby. Networking coffee will be served until 9:00 AM." 
+    },
+    "keynote": { 
+        time: "09:00 AM", 
+        title: "The Invisible World", 
+        desc: "Keynote session by Francis Kong focusing on leadership in the digital age." 
+    },
+    "disrupt": { 
+        time: "10:30 AM", 
+        title: "Industry Disruptors Panel", 
+        desc: "A deep dive into how AI and E-Government are changing the landscape." 
+    }
 };
 
-// INITIALIZE MENU
+const infoData = {
+    "How to get there": `<p><strong>Venue:</strong> SMX Convention Center, Manila</p><p>Grab/Taxi: Pin to "SMX Convention Center Main Lobby".</p>`,
+    "Experience Zone": `<p>Visit the following booths:</p><ul><li>AI Future Hub</li><li>Gaming Arena</li></ul>`,
+    "Prepare for the event": `<p><strong>Dress Code:</strong> Smart Casual</p><ul><li>Digital Ticket</li><li>Power Bank</li></ul>`
+};
+
+// 2. CORE NAVIGATION
 function init() {
     const container = document.getElementById('menu-container');
     container.innerHTML = menuItems.map(item => `
@@ -61,26 +64,132 @@ function init() {
 function openPage(title) {
     const view = document.getElementById('details-view');
     document.getElementById('page-title').innerText = title;
-    
+    const content = document.getElementById('page-content');
+
     if (title === "Speakers") {
         renderSpeakers();
+    } else if (title === "Agenda") {
+        switchDay(1);
     } else {
-        document.getElementById('page-content').innerHTML = infoData[title] || "Content coming soon.";
+        content.innerHTML = infoData[title] || "Content coming soon.";
     }
-    view.classList.add('view-active');
+    
+    view.style.display = 'block'; // Ensure it's visible
+    setTimeout(() => { view.classList.add('view-active'); }, 10);
 }
 
-function renderSpeakers() {
-    let html = speakers.map((s, i) => `
-        <div class="speaker-row" onclick="viewSpeaker(${i})">
-            <img src="${s.img}" class="row-img">
-            <div>
-                <div style="font-weight:700; color:#2d3748;">${s.name}</div>
-                <div style="font-size:0.75rem; color:var(--converge-teal);">${s.tag}</div>
+function closePage(id) {
+    const view = document.getElementById(id);
+    view.classList.remove('view-active');
+    
+    // For the Agenda Detail which uses direct transform/display
+    view.style.transform = 'translateY(100%)';
+    
+    setTimeout(() => {
+        if(id === 'agenda-detail-view') view.style.display = 'none';
+        view.scrollTo(0, 0);
+    }, 400);
+}
+
+// 3. AGENDA LOGIC
+function switchDay(day) {
+    const content = document.getElementById('page-content');
+    let dayContent = "";
+
+    if (day === 1) {
+        dayContent = `
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <span class="time-label">08:00 AM</span>
+                <div class="event-card" onclick="viewAgendaDetail('reg')">
+                    <strong>Registration & Coffee</strong><span>Main Lobby</span>
+                </div>
             </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <span class="time-label">09:00 AM</span>
+                <div class="event-card" onclick="viewAgendaDetail('keynote')">
+                    <strong>Keynote: Francis Kong</strong><span>Main Hall</span>
+                </div>
+            </div>`;
+    } else {
+        dayContent = `
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <span class="time-label">10:30 AM</span>
+                <div class="event-card" onclick="viewAgendaDetail('disrupt')">
+                    <strong>Industry Disruptors</strong><span>Panel Discussion</span>
+                </div>
+            </div>`;
+    }
+
+    content.innerHTML = `
+        <div class="switcher-pill">
+            <div id="btn-day1" class="pill-btn" style="${day === 1 ? 'background:var(--converge-teal);color:white;' : 'color:#64748b;'}" onclick="switchDay(1)">DAY 1</div>
+            <div id="btn-day2" class="pill-btn" style="${day === 2 ? 'background:var(--converge-teal);color:white;' : 'color:#64748b;'}" onclick="switchDay(2)">DAY 2</div>
         </div>
-    `).join('');
-    document.getElementById('page-content').innerHTML = html;
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+            ${dayContent}
+        </div>`;
+}
+
+function viewAgendaDetail(eventId) {
+    const event = agendaEvents[eventId];
+    if(!event) return;
+
+    document.getElementById('agenda-time-display').innerText = event.time;
+    document.getElementById('agenda-title-display').innerText = event.title;
+    document.getElementById('agenda-desc-display').innerHTML = event.desc;
+    
+    const view = document.getElementById('agenda-detail-view');
+    view.style.display = 'block';
+    setTimeout(() => { view.style.transform = 'translateY(0)'; }, 10);
+}
+
+// 4. SPEAKER LOGIC (Carousel + List)
+function renderSpeakers() {
+    const container = document.getElementById('page-content');
+    
+    let carouselHtml = '<div class="carousel-wrapper" id="speaker-carousel">';
+    speakers.slice(0, 3).forEach((s, i) => {
+        carouselHtml += `
+            <div class="carousel-item-box" onclick="viewSpeaker(${i})">
+                <img src="${s.img}" class="carousel-img" onerror="this.src='https://via.placeholder.com/400x300?text=NASCON'">
+                <div class="carousel-caption">
+                    <div style="font-weight:800; font-size:1.2rem;">${s.name}</div>
+                    <div style="font-size:0.85rem;">${s.topic}</div>
+                </div>
+            </div>`;
+    });
+    carouselHtml += '</div>';
+
+    let listHtml = '<h5 style="margin: 10px 0 20px 0; font-weight: 800;">All Speakers</h5>';
+    speakers.forEach((s, i) => {
+        listHtml += `
+            <div class="speaker-row" onclick="viewSpeaker(${i})">
+                <img src="${s.img}" class="row-img">
+                <div style="flex-grow:1;">
+                    <div style="font-weight:700;">${s.name}</div>
+                    <div style="font-size:0.8rem; color:var(--converge-teal);">${s.tag}</div>
+                </div>
+                <span>›</span>
+            </div>`;
+    });
+
+    container.innerHTML = carouselHtml + listHtml;
+
+    // Auto-slide logic
+    const wrapper = document.getElementById('speaker-carousel');
+    if (window.carouselInterval) clearInterval(window.carouselInterval);
+    window.carouselInterval = setInterval(() => {
+        const step = wrapper.querySelector('.carousel-item-box').offsetWidth + 15;
+        if (wrapper.scrollLeft >= (wrapper.scrollWidth - wrapper.offsetWidth - 20)) {
+            wrapper.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+            wrapper.scrollBy({ left: step, behavior: 'smooth' });
+        }
+    }, 4000);
 }
 
 function viewSpeaker(index) {
@@ -89,139 +198,10 @@ function viewSpeaker(index) {
         <img src="${s.img}" style="width:100%; border-radius:25px; margin-bottom:20px;">
         <h2 style="font-weight:800;">${s.name}</h2>
         <p style="color:var(--converge-teal); font-weight:700;">${s.tag}</p>
-        <hr>${s.bio}
-    `;
-    document.getElementById('speaker-profile-view').classList.add('view-active');
+        <hr>${s.bio}`;
+    document.getElementById('speaker-profile-view').style.display = 'block';
+    setTimeout(() => { document.getElementById('speaker-profile-view').classList.add('view-active'); }, 10);
 }
 
-function closePage(id) {
-    const view = document.getElementById(id);
-    view.classList.remove('view-active');
-    
-    // Optional: wait for animation to finish before resetting scroll position
-    setTimeout(() => {
-        view.scrollTo(0, 0);
-    }, 400);
-}
-
-function switchDay(day) {
-    const btn1 = document.getElementById('btn-day1');
-    const btn2 = document.getElementById('btn-day2');
-    const content = document.getElementById('page-content'); // Or 'agenda-list' depending on your HTML
-
-    // 1. Update Button Styles
-    if (day === 1) {
-        btn1.style.background = 'var(--converge-teal)';
-        btn1.style.color = 'white';
-        btn2.style.background = '#f1f5f9';
-        btn2.style.color = '#64748b';
-        
-        // 2. Update Content for Day 1
-        document.getElementById('page-content').innerHTML = `
-            ${getAgendaTabs(1)}
-            <div class="timeline-container">
-                <p><strong>08:00 AM</strong> - Day 1 Registration</p>
-                <p><strong>09:00 AM</strong> - Opening Keynote</p>
-            </div>`;
-    } else {
-        btn2.style.background = 'var(--converge-teal)';
-        btn2.style.color = 'white';
-        btn1.style.background = '#f1f5f9';
-        btn1.style.color = '#64748b';
-        
-        // 3. Update Content for Day 2
-        document.getElementById('page-content').innerHTML = `
-            ${getAgendaTabs(2)}
-            <div class="timeline-container">
-                <p><strong>09:00 AM</strong> - Day 2 Workshop</p>
-                <p><strong>02:00 PM</strong> - Closing Ceremony</p>
-            </div>`;
-    }
-}
-
-// Helper to keep the tabs visible when switching
-function getAgendaTabs(activeDay) {
-    const style1 = activeDay === 1 ? 'background: var(--converge-teal); color: white;' : 'color: #64748b;';
-    const style2 = activeDay === 2 ? 'background: var(--converge-teal); color: white;' : 'color: #64748b;';
-    
-    return `
-        <div class="switcher-pill">
-            <div id="btn-day1" class="pill-btn" style="${style1}" onclick="switchDay(1)">DAY 1</div>
-            <div id="btn-day2" class="pill-btn" style="${style2}" onclick="switchDay(2)">DAY 2</div>
-        </div>`;
-}
-
-function renderSpeakers() {
-    const container = document.getElementById('page-content');
-    if (!container) return;
-
-    // 1. Generate Carousel HTML (Top 3 Speakers)
-    // CSS padding: 0 10% on .carousel-wrapper handles the centering naturally
-    let carouselHtml = '<div class="carousel-wrapper" id="speaker-carousel">';
-
-    speakers.slice(0, 3).forEach((s, i) => {
-        carouselHtml += `
-            <div class="carousel-item-box" onclick="viewSpeaker(${i})">
-                <img src="${s.img}" class="carousel-img" onerror="this.src='https://via.placeholder.com/400x300?text=NASCON+Speaker'">
-                <div class="carousel-caption">
-                    <div style="font-weight:800; font-size:1.2rem; line-height:1.2;">${s.name}</div>
-                    <div style="font-size:0.85rem; opacity:0.9; margin-top:4px;">${s.topic}</div>
-                </div>
-            </div>
-        `;
-    });
-
-    carouselHtml += '</div>';
-
-    // 2. Generate List HTML (All Speakers)
-    let listHtml = '<h5 style="margin: 10px 0 20px 0; font-weight: 800; color: #2d3748; letter-spacing: -0.5px;">All Speakers</h5>';
-    
-    speakers.forEach((s, i) => {
-        listHtml += `
-            <div class="speaker-row" onclick="viewSpeaker(${i})">
-                <img src="${s.img}" class="row-img" onerror="this.src='https://via.placeholder.com/100x100?text=👤'">
-                <div style="flex-grow:1;">
-                    <div style="font-weight:700; color:#1a202c; font-size:1.05rem;">${s.name}</div>
-                    <div style="font-size:0.8rem; color:var(--converge-teal); font-weight:600;">${s.tag}</div>
-                </div>
-                <div style="color:#cbd5e0; font-size:1.2rem; padding-left:10px;">›</div>
-            </div>
-        `;
-    });
-
-    // 3. Inject into the DOM
-    container.innerHTML = carouselHtml + listHtml;
-
-    // 4. Smooth Auto-Slide Logic
-    const wrapper = document.getElementById('speaker-carousel');
-    let isUserInteracting = false;
-
-    // Clear existing interval to avoid speed-up issues
-    if (window.carouselInterval) clearInterval(window.carouselInterval);
-
-    window.carouselInterval = setInterval(() => {
-        if (isUserInteracting) return;
-
-        const card = wrapper.querySelector('.carousel-item-box');
-        if (!card) return;
-
-        const scrollStep = card.offsetWidth + 15; // Width + margin-right
-        const maxScroll = wrapper.scrollWidth - wrapper.offsetWidth;
-
-        // If at the end, snap back to start; otherwise, slide right
-        if (wrapper.scrollLeft >= maxScroll - 20) {
-            wrapper.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-            wrapper.scrollBy({ left: scrollStep, behavior: 'smooth' });
-        }
-    }, 4000); // 4 seconds delay for better readability
-
-    // Pause auto-slide on touch
-    wrapper.addEventListener('touchstart', () => { isUserInteracting = true; });
-    wrapper.addEventListener('touchend', () => {
-        // Resume auto-slide after 3 seconds of no touching
-        setTimeout(() => { isUserInteracting = false; }, 3000);
-    });
-}
-
+// Start
 init();
