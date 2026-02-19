@@ -30,8 +30,12 @@ const agendaData = {
         { id: "agenda12", time: "09:00 AM", title: "Coming Soon!", location: "Coming Soon!" }
     ],
     2: [
-        { id: "agenda2", time: "09:00 AM", title: "Coming Soon!", location: "Coming Soon!" },
-        { id: "agenda21", time: "10:30 AM", title: "Coming Soon!", location: "Coming Soon!" }
+        { id: "agenda2", time: "08:00 - 09:00", title: "Registration", location: "" },
+        { id: "agenda21", time: "09:00 - 09:45", title: "Plenary 1 Session", location: "The Connected Consumer 2026: Beyond the Buy Button" },
+        { id: "agenda22", time: "09:55 - 10:40", title: "Plenary 2 Panel: The State of the Ecosystem", location: "Winning Through Partners" },
+        { id: "agenda23", time: "10:40 - 10:55", title: "Break", location: "" },
+        { id: "agenda24", time: "11:00 - 11:45", title: "Plenary 3 Session", location: "The Switch Mindset: Disruption as a Sales Tool" },
+        { id: "agenda25", time: "11:45 - 12:55", title: "Lunch Break", location: "" }
     ]
 };
 
@@ -39,7 +43,7 @@ const agendaDetails = {
     "agenda1": "Pick up your badges at the main lobby. Networking coffee will be served until 9:00 AM.",
     "agenda12": "Keynote session by Francis Kong focusing on leadership in the digital age.",
     "agenda2": "Welcome back! A quick recap of Day 1 highlights and opening remarks for Day 2.",
-    "agenda21": "A deep dive with top leaders on how industry disruptors are changing the landscape."
+    "agenda99": "A deep dive with top leaders on how industry disruptors are changing the landscape."
 };
 
 const infoData = {
