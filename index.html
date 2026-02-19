@@ -109,30 +109,34 @@
     .pill-btn { flex: 1; text-align: center; padding: 10px; border-radius: 100px; font-weight: 700; transition: all 0.3s; cursor: pointer; font-size: 0.85rem; }
   
     .carousel-wrapper {
-      margin: 0 -24px 30px -24px; 
-      padding: 0 24px; /* Matches container padding for centering */
+      margin: 0 -24px 30px -24px;
+      padding: 0 10%; /* Creates the "centering" gutter */
       display: flex;
-      overflow-x: auto; 
-      scroll-snap-type: x mandatory; 
-      scroll-behavior: smooth; /* Makes the auto-move look like a slide */
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
       scrollbar-width: none;
-      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
     }
     
-    .carousel-wrapper::-webkit-scrollbar { display: none; }
-  
     .carousel-item-box {
-      flex: 0 0 85%; /* Card takes up 85% of screen width */
-      scroll-snap-align: center; /* This centers the card when scrolling */
-      margin-right: 15px; 
+      flex: 0 0 80vw; /* card takes up 80% of the viewport width */
+      scroll-snap-align: center;
+      margin: 0 10px;
       position: relative;
-      border-radius: 24px; 
-      overflow: hidden; 
-      height: 220px; 
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      border-radius: 24px;
+      overflow: hidden;
+      height: 250px; /* Increased height to show more of the person */
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
-  
-    .carousel-img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .carousel-img {
+      width: 100%;
+      height: 100%;
+      /* Fix: 'cover' fills the box, 'top' ensures heads aren't cut off */
+      object-fit: cover;
+      object-position: top center; 
+    }
   
     .carousel-caption {
       position: absolute; bottom: 0; left: 0; right: 0;
