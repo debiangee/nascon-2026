@@ -26,8 +26,8 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    /* HEADER */
     .app-header { 
-      /* Paste your specific background link here */
       background-image: url('https://lh7-rt.googleusercontent.com/formsz/AN7BsVDpzSHqUcRzT0U19E4l0RgZJIL1eVKovhfOkI1ySDEzF2JN8ZBu5r1riibTwVZdGnr_mTdQDzdsCmOiWr7IYDy0bhw7p3aU2g1NuumeRwn7aWEZSE3DiLxKSEugE7ET4v4zKps5_HF-Lsvug8KRSBfvsSA8ARpdSEfaBg?key=ZWZTTKYsQX6t2NYllweoDg'); 
       background-size: cover;
       background-position: center;
@@ -38,22 +38,13 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     }
 
+    /* MENU CARDS */
     .menu-card { 
       margin-bottom: 14px; border: none; border-radius: 22px; 
       background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.04); 
       cursor: pointer; transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
     }
     .menu-card:active { transform: scale(0.96); }
-    
-    html, body {
-      touch-action: manipulation; /* Removes the 300ms click delay */
-    }
-    
-    .menu-card, .btn-back, .speaker-row {
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent; /* Removes the ugly gray box when tapping */
-    }
-
     .card-body { display: flex; align-items: center; padding: 22px; }
     .icon-box { 
       width: 54px; height: 54px; background: var(--mint-bg); 
@@ -62,32 +53,21 @@
     }
     .card-text { font-weight: 700; flex-grow: 1; font-size: 1.15rem; color: #2d3748; }
 
-    #details-view, #speaker-profile-view { 
-      display: block; /* Always block, but hidden off-screen */
+    /* VIEW SYSTEM (SLIDE UP) */
+    #details-view, #speaker-profile-view, #agenda-detail-view { 
+      display: none; 
       position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; 
+      top: 0; left: 0; 
+      width: 100%; height: 100%; 
       background: white; 
       z-index: 1000; 
       overflow-y: auto;
-      
-      /* Start the page off-bottom */
       transform: translateY(100%); 
-      /* Cubic-bezier makes the slide feel "organic" and premium */
       transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
-    }
-    
-    .view-active { 
-      /* Slide it up to the top */
-      transform: translateY(0) !important; 
-    }
-    
-    #details-view, #speaker-profile-view {
       will-change: transform;
-      backface-visibility: hidden;
     }
+    
+    .view-active { transform: translateY(0) !important; }
 
     .details-header { 
       padding: 20px; border-bottom: 1px solid #edf2f7; 
@@ -102,55 +82,52 @@
     .content-area { padding: 32px 24px; }
     .content-title { font-weight: 800; margin-bottom: 30px; font-size: 1.9rem; letter-spacing: -0.5px; }
 
-    /* Timeline & Speaker List styles from your code */
-    .speaker-row { display: flex; align-items: center; padding: 15px; background: #fff; border-radius: 20px; margin-bottom: 12px; border: 1px solid #f1f5f9; cursor: pointer; }
-    .row-img { width: 55px; height: 55px; border-radius: 15px; object-fit: cover; margin-right: 15px; }
+    /* AGENDA / TIMELINE STYLES */
     .switcher-pill { display: flex; background: #f1f5f9; padding: 4px; border-radius: 100px; margin-bottom: 30px; border: 1px solid #e2e8f0; }
     .pill-btn { flex: 1; text-align: center; padding: 10px; border-radius: 100px; font-weight: 700; transition: all 0.3s; cursor: pointer; font-size: 0.85rem; }
-  
-    .carousel-wrapper {
-      margin: 0 -24px 30px -24px;
-      padding: 0 10%; /* Creates the "centering" gutter */
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-    }
     
+    .timeline-container { position: relative; padding-left: 20px; }
+    .timeline-line { position: absolute; left: 5px; top: 10px; bottom: 10px; width: 2px; background: #eef2f6; }
+    .timeline-item { position: relative; margin-bottom: 25px; }
+    .timeline-dot { position: absolute; left: -21px; top: 12px; width: 12px; height: 12px; background: white; border: 3px solid var(--converge-teal); border-radius: 50%; z-index: 2; }
+    .time-label { font-size: 0.75rem; font-weight: 800; color: var(--converge-teal); display: block; margin-bottom: 6px; text-transform: uppercase; }
+    
+    .event-card { 
+      background: white; border-radius: 18px; padding: 16px; border: 1px solid #edf2f7; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03); cursor: pointer; 
+    }
+    .event-card:active { transform: scale(0.97); background: #fcfcfc; }
+    .event-card strong { display: block; font-size: 1.05rem; color: #1a202c; line-height: 1.3; }
+    .event-card span { font-size: 0.85rem; color: #718096; }
+
+    /* SPEAKER CAROUSEL */
+    .carousel-wrapper {
+      margin: 0 -24px 30px -24px; padding: 0 10%; 
+      display: flex; overflow-x: auto; scroll-snap-type: x mandatory; 
+      scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    }
+    .carousel-wrapper::-webkit-scrollbar { display: none; }
     .carousel-item-box {
-      flex: 0 0 80vw; /* card takes up 80% of the viewport width */
-      scroll-snap-align: center;
-      margin: 0 10px;
-      position: relative;
-      border-radius: 24px;
-      overflow: hidden;
-      height: 250px; /* Increased height to show more of the person */
+      flex: 0 0 80vw; scroll-snap-align: center; margin: 0 10px;
+      position: relative; border-radius: 24px; overflow: hidden; height: 250px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
-    
-    .carousel-img {
-      width: 100%;
-      height: 100%;
-      /* Fix: 'cover' fills the box, 'top' ensures heads aren't cut off */
-      object-fit: cover;
-      object-position: top center; 
-    }
-  
+    .carousel-img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
     .carousel-caption {
       position: absolute; bottom: 0; left: 0; right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.85)); 
-      padding: 15px; color: white;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85)); padding: 15px; color: white;
     }
+
+    /* SPEAKER LIST */
+    .speaker-row { display: flex; align-items: center; padding: 15px; background: #fff; border-radius: 20px; margin-bottom: 12px; border: 1px solid #f1f5f9; cursor: pointer; }
+    .row-img { width: 55px; height: 55px; border-radius: 15px; object-fit: cover; margin-right: 15px; background: #eee;}
   </style>
 </head>
 <body>
 
   <div id="main-menu">
     <div class="app-header"></div>
-    <div class="container" id="menu-container">
-      </div>
+    <div class="container" id="menu-container"></div>
   </div>
 
   <div id="details-view">
@@ -166,6 +143,168 @@
     <div id="profile-content" class="content-area"></div>
   </div>
 
-  <script src="script.js"></script>
+  <div id="agenda-detail-view">
+    <div class="details-header"><button class="btn-back" onclick="closePage('agenda-detail-view')">← CLOSE</button></div>
+    <div class="content-area">
+      <span id="agenda-time-display" style="color:var(--converge-teal); font-weight:800; font-size:0.75rem;"></span>
+      <h1 id="agenda-title-display" style="font-weight:800; margin:10px 0; line-height:1.2; font-size:1.8rem;"></h1>
+      <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+      <div id="agenda-desc-display" style="color:#4a5568; line-height:1.7; font-size:1.1rem;"></div>
+    </div>
+  </div>
+
+  <script>
+    // --- DATA ---
+    const menuItems = [
+      { title: "Agenda", icon: "📅" },
+      { title: "Speakers", icon: "👤" },
+      { title: "How to get there", icon: "📍" },
+      { title: "Experience Zone", icon: "🎮" },
+      { title: "Prepare for the event", icon: "🎒" }
+    ];
+
+    const speakers = [
+      { name: 'Francis Kong', tag: 'Keynote Speaker', topic: 'The Invisible World', img: 'https://via.placeholder.com/150', bio: 'Francisco J. Kong is a multi-awarded business speaker and author...' },
+      { name: 'Hon. David L. Almirol, Jr.', tag: 'DICT Undersecretary', topic: 'Industry Disruptors', img: 'https://ucarecdn.com/68f87f36-eeab-4c7d-87f3-e15a348c40ab/', bio: 'Usec. David is a 2021 TOYM awardee for Science and Technology...' }
+    ];
+
+    const agendaEvents = {
+      "reg": { time: "08:00 AM", title: "Registration & Coffee", desc: "Pick up your badges at the main lobby. Networking coffee will be served until 9:00 AM." },
+      "keynote": { time: "09:00 AM", title: "The Invisible World", desc: "Keynote session by Francis Kong focusing on leadership in the digital age." },
+      "disrupt": { time: "10:30 AM", title: "Industry Disruptors", desc: "A deep dive with top leaders on how AI is changing the landscape." }
+    };
+
+    const infoData = {
+      "How to get there": `<p><strong>Venue:</strong> SMX Convention Center, Manila</p><p>Grab/Taxi: Pin to "SMX Convention Center Main Lobby".</p>`,
+      "Experience Zone": `<p>Visit the following booths for interactive demos:</p><ul><li>AI Future Hub</li><li>Gaming Arena</li></ul>`,
+      "Prepare for the event": `<p><strong>Dress Code:</strong> Smart Casual</p><ul><li>Digital Ticket (QR Code)</li><li>Power Bank</li></ul>`
+    };
+
+    // --- NAVIGATION ---
+    function init() {
+      const container = document.getElementById('menu-container');
+      container.innerHTML = menuItems.map(item => `
+        <div class="menu-card" onclick="openPage('${item.title}')">
+          <div class="card-body">
+            <div class="icon-box">${item.icon}</div>
+            <div class="card-text">${item.title}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openPage(title) {
+      const view = document.getElementById('details-view');
+      document.getElementById('page-title').innerText = title;
+      
+      if (title === "Speakers") {
+        renderSpeakers();
+      } else if (title === "Agenda") {
+        switchDay(1);
+      } else {
+        document.getElementById('page-content').innerHTML = infoData[title] || "Coming soon.";
+      }
+      
+      view.style.display = 'block';
+      setTimeout(() => view.classList.add('view-active'), 10);
+    }
+
+    function closePage(id) {
+      const view = document.getElementById(id);
+      view.classList.remove('view-active');
+      setTimeout(() => {
+        view.style.display = 'none';
+        view.scrollTo(0, 0);
+      }, 400);
+    }
+
+    // --- AGENDA LOGIC ---
+    function switchDay(day) {
+      const content = document.getElementById('page-content');
+      let dayContent = day === 1 ? `
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="time-label">08:00 AM</span>
+          <div class="event-card" onclick="viewAgendaDetail('reg')">
+            <strong>Registration & Coffee</strong><span>Main Lobby</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="time-label">09:00 AM</span>
+          <div class="event-card" onclick="viewAgendaDetail('keynote')">
+            <strong>The Invisible World</strong><span>Francis Kong</span>
+          </div>
+        </div>` : `
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="time-label">10:30 AM</span>
+          <div class="event-card" onclick="viewAgendaDetail('disrupt')">
+            <strong>Industry Disruptors</strong><span>Panel Discussion</span>
+          </div>
+        </div>`;
+
+      content.innerHTML = `
+        <div class="switcher-pill">
+          <div class="pill-btn" style="${day===1?'background:var(--converge-teal);color:white;':''}" onclick="switchDay(1)">DAY 1</div>
+          <div class="pill-btn" style="${day===2?'background:var(--converge-teal);color:white;':''}" onclick="switchDay(2)">DAY 2</div>
+        </div>
+        <div class="timeline-container"><div class="timeline-line"></div>${dayContent}</div>`;
+    }
+
+    function viewAgendaDetail(id) {
+      const event = agendaEvents[id];
+      if(!event) return;
+      document.getElementById('agenda-time-display').innerText = event.time;
+      document.getElementById('agenda-title-display').innerText = event.title;
+      document.getElementById('agenda-desc-display').innerHTML = event.desc;
+      const view = document.getElementById('agenda-detail-view');
+      view.style.display = 'block';
+      setTimeout(() => view.classList.add('view-active'), 10);
+    }
+
+    // --- SPEAKER LOGIC ---
+    function renderSpeakers() {
+      const container = document.getElementById('page-content');
+      let carouselHtml = '<div class="carousel-wrapper" id="speaker-carousel">';
+      speakers.forEach((s, i) => {
+        carouselHtml += `
+          <div class="carousel-item-box" onclick="viewSpeaker(${i})">
+            <img src="${s.img}" class="carousel-img">
+            <div class="carousel-caption">
+              <div style="font-weight:800; font-size:1.2rem;">${s.name}</div>
+              <div style="font-size:0.85rem;">${s.topic}</div>
+            </div>
+          </div>`;
+      });
+      carouselHtml += '</div><h5 style="font-weight:800; margin-bottom:20px;">All Speakers</h5>';
+      
+      let listHtml = speakers.map((s, i) => `
+        <div class="speaker-row" onclick="viewSpeaker(${i})">
+          <img src="${s.img}" class="row-img">
+          <div style="flex-grow:1;">
+            <div style="font-weight:700;">${s.name}</div>
+            <div style="font-size:0.8rem; color:var(--converge-teal);">${s.tag}</div>
+          </div>
+          <span>›</span>
+        </div>`).join('');
+      
+      container.innerHTML = carouselHtml + listHtml;
+    }
+
+    function viewSpeaker(i) {
+      const s = speakers[i];
+      document.getElementById('profile-content').innerHTML = `
+        <img src="${s.img}" style="width:100%; border-radius:25px; margin-bottom:20px;">
+        <h2 style="font-weight:800;">${s.name}</h2>
+        <p style="color:var(--converge-teal); font-weight:700;">${s.tag}</p>
+        <hr>${s.bio}`;
+      const view = document.getElementById('speaker-profile-view');
+      view.style.display = 'block';
+      setTimeout(() => view.classList.add('view-active'), 10);
+    }
+
+    init();
+  </script>
 </body>
 </html>
