@@ -103,7 +103,41 @@ function closePage(id) {
         view.scrollTo(0, 0);
     }, 400);
 }
-init();
+
+function switchDay(day) {
+    const btn1 = document.getElementById('btn-day1');
+    const btn2 = document.getElementById('btn-day2');
+    const content = document.getElementById('page-content'); // Or 'agenda-list' depending on your HTML
+
+    // 1. Update Button Styles
+    if (day === 1) {
+        btn1.style.background = 'var(--converge-teal)';
+        btn1.style.color = 'white';
+        btn2.style.background = '#f1f5f9';
+        btn2.style.color = '#64748b';
+        
+        // 2. Update Content for Day 1
+        document.getElementById('page-content').innerHTML = `
+            ${getAgendaTabs(1)}
+            <div class="timeline-container">
+                <p><strong>08:00 AM</strong> - Day 1 Registration</p>
+                <p><strong>09:00 AM</strong> - Opening Keynote</p>
+            </div>`;
+    } else {
+        btn2.style.background = 'var(--converge-teal)';
+        btn2.style.color = 'white';
+        btn1.style.background = '#f1f5f9';
+        btn1.style.color = '#64748b';
+        
+        // 3. Update Content for Day 2
+        document.getElementById('page-content').innerHTML = `
+            ${getAgendaTabs(2)}
+            <div class="timeline-container">
+                <p><strong>09:00 AM</strong> - Day 2 Workshop</p>
+                <p><strong>02:00 PM</strong> - Closing Ceremony</p>
+            </div>`;
+    }
+}
 
 // Helper to keep the tabs visible when switching
 function getAgendaTabs(activeDay) {
