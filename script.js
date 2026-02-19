@@ -26,12 +26,12 @@ const speakers = [
 
 const agendaData = {
     1: [
-        { id: "reg", time: "08:00 AM", title: "Registration & Coffee", location: "Main Lobby" },
-        { id: "keynote", time: "09:00 AM", title: "The Invisible World", location: "Francis Kong" }
+        { id: "agenda1", time: "08:00 AM", title: "Coming Soon!", location: "Coming Soon!" },
+        { id: "agenda12", time: "09:00 AM", title: "Coming Soon!", location: "Coming Soon!" }
     ],
     2: [
-        { id: "day2start", time: "09:00 AM", title: "Day 2 Kickoff", location: "Grand Ballroom" },
-        { id: "disrupt", time: "10:30 AM", title: "Industry Disruptors", location: "Panel Discussion" }
+        { id: "agenda2", time: "09:00 AM", title: "Coming Soon!", location: "Coming Soon!" },
+        { id: "agenda21", time: "10:30 AM", title: "Coming Soon!", location: "Coming Soon!" }
     ]
 };
 
