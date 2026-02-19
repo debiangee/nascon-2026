@@ -36,10 +36,10 @@ const agendaData = {
 };
 
 const agendaDetails = {
-    "reg": "Pick up your badges at the main lobby. Networking coffee will be served until 9:00 AM.",
-    "keynote": "Keynote session by Francis Kong focusing on leadership in the digital age.",
-    "day2start": "Welcome back! A quick recap of Day 1 highlights and opening remarks for Day 2.",
-    "disrupt": "A deep dive with top leaders on how industry disruptors are changing the landscape."
+    "agenda1": "Pick up your badges at the main lobby. Networking coffee will be served until 9:00 AM.",
+    "agenda12": "Keynote session by Francis Kong focusing on leadership in the digital age.",
+    "agenda2": "Welcome back! A quick recap of Day 1 highlights and opening remarks for Day 2.",
+    "agenda21": "A deep dive with top leaders on how industry disruptors are changing the landscape."
 };
 
 const infoData = {
