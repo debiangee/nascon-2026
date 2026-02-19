@@ -8,7 +8,7 @@ const menuItems = [
 ];
 
 const speakers = [
-    { name: 'Francis Kong', tag: 'Keynote Speaker', bio: 'Francisco J. Kong is a multi-awarded business speaker...', img: 'https://via.placeholder.com/150', topic: 'The Invisible World' },
+    { name: 'Francis Kong', tag: 'Keynote Speaker', bio: 'Francisco J. Kong is a multi-awarded business speaker...', img: 'https://lh7-rt.googleusercontent.com/formsz/AN7BsVBFB0LzZkzt4cdU3Z-vqfGwbBYXBj_n3efcHijsCcnuHCar2M5t24ZbQelx9WUghDYfpwrHlwDCs1mNXv-nN1Dk0lAV43wxueVnO8BOZusxaThEEcEME4v6Aj16_H-gcOnSUqaGjFlQVMrd36TpHN69j3YVYpP4mhxIdg?key=ZWZTTKYsQX6t2NYllweoDg', topic: 'The Invisible World' },
     { name: 'Hon. David L. Almirol, Jr.', tag: 'DICT Undersecretary', bio: 'Ten Outstanding Young Men (TOYM) awardee...', img: 'https://ucarecdn.com/68f87f36-eeab-4c7d-87f3-e15a348c40ab/', topic: 'Industry Disruptors' }
     // Add other speakers here...
 ];
