@@ -60,9 +60,9 @@ const agendaDetails = {
 };
 
 const infoData = {
-    "How to get there": `<p><strong>Venue:</strong> SMX Convention Center, Manila</p><p>Grab/Taxi: Pin to "SMX Convention Center Main Lobby".</p>`,
-    "Experience Zone": `<p>Visit the following booths for interactive demos:</p><ul><li>AI Future Hub</li><li>Gaming Arena</li></ul>`,
-    "Prepare for the event": `<p><strong>Dress Code:</strong> Smart Casual</p><ul><li>Digital Ticket (QR Code)</li><li>Power Bank</li></ul>`
+    "How to get there": `<p><strong>Venue:</strong> Coming Soon! 🌟</p><p>.</p>`,
+    "Experience Zone": `<p>Coming Soon! 🌟</p><ul><li>Experience 1 🐢</li><li>Experience 2 🐢</li></ul>`,
+    "Prepare for the event": `<p><strong>Dress Code:</strong> Coming Soon! 🌟</p><ul><li>Prepare 1 🐢</li><li>Prepare 2 🐢</li></ul>`
 };
 
 // --- CORE NAVIGATION ---
