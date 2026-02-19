@@ -35,7 +35,11 @@ const agendaData = {
         { id: "agenda22", time: "09:55 - 10:40", title: "Plenary 2 Panel: The State of the Ecosystem", location: "Winning Through Partners" },
         { id: "agenda23", time: "10:40 - 10:55", title: "Break", location: "" },
         { id: "agenda24", time: "11:00 - 11:45", title: "Plenary 3 Session", location: "The Switch Mindset: Disruption as a Sales Tool" },
-        { id: "agenda25", time: "11:45 - 12:55", title: "Lunch Break", location: "" }
+        { id: "agenda25", time: "11:45 - 12:55", title: "Lunch Break", location: "" },
+        { id: "agenda26", time: "01:00 - 01:45", title: "Track A1, B1, C1", location: "" },
+        { id: "agenda27", time: "01:45 - 02:30", title: "Track A2, B2, C2", location: "" },
+        { id: "agenda28", time: "02:30 - 02:40", title: "Quick Break", location: "" },
+        { id: "agenda29", time: "02:40 - 03:25", title: "Wild Card Session", location: "Navigating the Economic Buyer as Sole Proprietor" }
     ]
 };
 
@@ -43,6 +47,15 @@ const agendaDetails = {
     "agenda1": "Pick up your badges at the main lobby. Networking coffee will be served until 9:00 AM.",
     "agenda12": "Keynote session by Francis Kong focusing on leadership in the digital age.",
     "agenda2": "Welcome back! A quick recap of Day 1 highlights and opening remarks for Day 2.",
+    "agenda21": "A keynote on the evolving B2C landscape where AI-driven personalization and \"instant gratification\" are the baselines. This session focuses on how the salesforce moves from being 'transactional vendors' to 'lifestyle architects'.",
+    "agenda22": "A leadership panel featuring internal execs and key Managed Service Partners (MSPs). It highlights how our collaborative 'TechCo' ecosystem creates a competitive advantage for Converge.",
+    "agenda23": "Short Break",
+    "agenda24": "An inspirational session on the psychology of the 'Switch'. It reframes market saturation not as a hurdle, but as an opportunity to win over dissatisfied customers from legacy providers through superior tech value. ",
+    "agenda25": "Lunch Break",
+    "agenda26": "<b>TRACK A1 | Influencing the Influencers: Retail & Third-Part Management</b><br<br>This session focuses on how to effectively influence, motivate, and enable MSPs who do not report directly to you. Participants will learn practical strategies to align incentives, build accountability, and drive performance through trust, clarity, and partnership without relying on formal authority.<hr><b>TRACK C1 | Social Selling: Your Personal Brand Advantage</b><br><br>This session explores how to turn LinkedIn and other social platforms into a 24/7 lead-generation and credibility engine. Participants will learn how to share targeted “micro-insights” that resonate with preferred consumers and SME owners, and how to build a personal brand that transforms cold outreach into warm, trust-based conversations.<br><br>The session also covers positioning yourself as a local tech expert, so when customers are ready to switch, you are their first message.",
+    "agenda27": "Welcome back! A quick recap of Day 1 highlights and opening remarks for Day 2.",
+    "agenda28": "Welcome back! A quick recap of Day 1 highlights and opening remarks for Day 2.",
+    "agenda29": "Welcome back! A quick recap of Day 1 highlights and opening remarks for Day 2.",
     "agenda99": "A deep dive with top leaders on how industry disruptors are changing the landscape."
 };
 
