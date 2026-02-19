@@ -95,7 +95,12 @@ function viewSpeaker(index) {
 }
 
 function closePage(id) {
-    document.getElementById(id).classList.remove('view-active');
+    const view = document.getElementById(id);
+    view.classList.remove('view-active');
+    
+    // Optional: wait for animation to finish before resetting scroll position
+    setTimeout(() => {
+        view.scrollTo(0, 0);
+    }, 400);
 }
-
 init();
