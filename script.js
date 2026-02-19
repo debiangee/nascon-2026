@@ -104,3 +104,17 @@ function closePage(id) {
     }, 400);
 }
 init();
+
+// Helper to keep the tabs visible when switching
+function getAgendaTabs(activeDay) {
+    const style1 = activeDay === 1 ? 'background: var(--converge-teal); color: white;' : 'color: #64748b;';
+    const style2 = activeDay === 2 ? 'background: var(--converge-teal); color: white;' : 'color: #64748b;';
+    
+    return `
+        <div class="switcher-pill">
+            <div id="btn-day1" class="pill-btn" style="${style1}" onclick="switchDay(1)">DAY 1</div>
+            <div id="btn-day2" class="pill-btn" style="${style2}" onclick="switchDay(2)">DAY 2</div>
+        </div>`;
+}
+
+init();
