@@ -8,7 +8,7 @@ const menuItems = [
 ];
 
 const speakers = [
-    { name: 'Francis Kong', tag: 'Keynote Speaker', bio: 'Francisco J. Kong is a multi-awarded business speaker...', img: 'https://lh7-rt.googleusercontent.com/formsz/AN7BsVBFB0LzZkzt4cdU3Z-vqfGwbBYXBj_n3efcHijsCcnuHCar2M5t24ZbQelx9WUghDYfpwrHlwDCs1mNXv-nN1Dk0lAV43wxueVnO8BOZusxaThEEcEME4v6Aj16_H-gcOnSUqaGjFlQVMrd36TpHN69j3YVYpP4mhxIdg?key=ZWZTTKYsQX6t2NYllweoDg', topic: 'The Invisible World' },
+    { name: 'Francis Kong', tag: 'Keynote Speaker', bio: 'Francisco J. Kong is a multi-awarded business speaker...', img: 'https://via.placeholder.com/150', topic: 'The Invisible World' },
     { name: 'Hon. David L. Almirol, Jr.', tag: 'DICT Undersecretary', bio: 'Ten Outstanding Young Men (TOYM) awardee...', img: 'https://ucarecdn.com/68f87f36-eeab-4c7d-87f3-e15a348c40ab/', topic: 'Industry Disruptors' }
     // Add other speakers here...
 ];
@@ -156,38 +156,35 @@ function renderSpeakers() {
     if (!container) return;
 
     // 1. Generate Carousel HTML (Top 3 Speakers)
-    // We add 'carousel-spacer' divs at the start and end to ensure the first/last cards center perfectly
-    let carouselHtml = `
-        <div class="carousel-wrapper" id="speaker-carousel">
-            <div style="flex: 0 0 5%;"></div> `;
+    // CSS padding: 0 10% on .carousel-wrapper handles the centering naturally
+    let carouselHtml = '<div class="carousel-wrapper" id="speaker-carousel">';
 
     speakers.slice(0, 3).forEach((s, i) => {
         carouselHtml += `
             <div class="carousel-item-box" onclick="viewSpeaker(${i})">
-                <img src="${s.img}" class="carousel-img" onerror="this.src='https://via.placeholder.com/400x220?text=NASCON+2026'">
+                <img src="${s.img}" class="carousel-img" onerror="this.src='https://via.placeholder.com/400x300?text=NASCON+Speaker'">
                 <div class="carousel-caption">
-                    <div style="font-weight:800; font-size:1.15rem; line-height:1.2;">${s.name}</div>
-                    <div style="font-size:0.8rem; opacity:0.9; margin-top:4px;">${s.topic}</div>
+                    <div style="font-weight:800; font-size:1.2rem; line-height:1.2;">${s.name}</div>
+                    <div style="font-size:0.85rem; opacity:0.9; margin-top:4px;">${s.topic}</div>
                 </div>
             </div>
         `;
     });
 
-    carouselHtml += `
-            <div style="flex: 0 0 5%;"></div> </div>
-    `;
+    carouselHtml += '</div>';
 
     // 2. Generate List HTML (All Speakers)
-    let listHtml = '<h5 style="margin: 10px 0 20px 0; font-weight: 800; color: #2d3748;">All Speakers</h5>';
+    let listHtml = '<h5 style="margin: 10px 0 20px 0; font-weight: 800; color: #2d3748; letter-spacing: -0.5px;">All Speakers</h5>';
+    
     speakers.forEach((s, i) => {
         listHtml += `
             <div class="speaker-row" onclick="viewSpeaker(${i})">
-                <img src="${s.img}" class="row-img" onerror="this.src='https://via.placeholder.com/60x60?text=👤'">
+                <img src="${s.img}" class="row-img" onerror="this.src='https://via.placeholder.com/100x100?text=👤'">
                 <div style="flex-grow:1;">
-                    <div style="font-weight:700; color:#1a202c; font-size:1rem;">${s.name}</div>
-                    <div style="font-size:0.75rem; color:var(--converge-teal); font-weight:600;">${s.tag}</div>
+                    <div style="font-weight:700; color:#1a202c; font-size:1.05rem;">${s.name}</div>
+                    <div style="font-size:0.8rem; color:var(--converge-teal); font-weight:600;">${s.tag}</div>
                 </div>
-                <div style="color:#cbd5e0; font-size:1.2rem;">›</div>
+                <div style="color:#cbd5e0; font-size:1.2rem; padding-left:10px;">›</div>
             </div>
         `;
     });
@@ -195,34 +192,35 @@ function renderSpeakers() {
     // 3. Inject into the DOM
     container.innerHTML = carouselHtml + listHtml;
 
-    // 4. Auto-Slide Logic
+    // 4. Smooth Auto-Slide Logic
     const wrapper = document.getElementById('speaker-carousel');
-    let isMoving = true;
+    let isUserInteracting = false;
 
-    // Clear existing interval to prevent speed-up
+    // Clear existing interval to avoid speed-up issues
     if (window.carouselInterval) clearInterval(window.carouselInterval);
 
     window.carouselInterval = setInterval(() => {
-        if (!isMoving) return;
+        if (isUserInteracting) return;
 
         const card = wrapper.querySelector('.carousel-item-box');
         if (!card) return;
 
-        const cardWidth = card.offsetWidth + 15; // Width + Margin
+        const scrollStep = card.offsetWidth + 15; // Width + margin-right
         const maxScroll = wrapper.scrollWidth - wrapper.offsetWidth;
 
-        if (wrapper.scrollLeft >= maxScroll - 10) {
+        // If at the end, snap back to start; otherwise, slide right
+        if (wrapper.scrollLeft >= maxScroll - 20) {
             wrapper.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
-            wrapper.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            wrapper.scrollBy({ left: scrollStep, behavior: 'smooth' });
         }
-    }, 3500); // 3.5 seconds per slide
+    }, 4000); // 4 seconds delay for better readability
 
-    // Pause auto-slide if user starts touching it manually
-    wrapper.addEventListener('touchstart', () => isMoving = false);
+    // Pause auto-slide on touch
+    wrapper.addEventListener('touchstart', () => { isUserInteracting = true; });
     wrapper.addEventListener('touchend', () => {
-        // Resume after 5 seconds of inactivity
-        setTimeout(() => isMoving = true, 5000);
+        // Resume auto-slide after 3 seconds of no touching
+        setTimeout(() => { isUserInteracting = false; }, 3000);
     });
 }
 
