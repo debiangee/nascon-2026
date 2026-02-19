@@ -151,4 +151,79 @@ function getAgendaTabs(activeDay) {
         </div>`;
 }
 
+function renderSpeakers() {
+    const container = document.getElementById('page-content');
+    if (!container) return;
+
+    // 1. Generate Carousel HTML (Top 3 Speakers)
+    // We add 'carousel-spacer' divs at the start and end to ensure the first/last cards center perfectly
+    let carouselHtml = `
+        <div class="carousel-wrapper" id="speaker-carousel">
+            <div style="flex: 0 0 5%;"></div> `;
+
+    speakers.slice(0, 3).forEach((s, i) => {
+        carouselHtml += `
+            <div class="carousel-item-box" onclick="viewSpeaker(${i})">
+                <img src="${s.img}" class="carousel-img" onerror="this.src='https://via.placeholder.com/400x220?text=NASCON+2026'">
+                <div class="carousel-caption">
+                    <div style="font-weight:800; font-size:1.15rem; line-height:1.2;">${s.name}</div>
+                    <div style="font-size:0.8rem; opacity:0.9; margin-top:4px;">${s.topic}</div>
+                </div>
+            </div>
+        `;
+    });
+
+    carouselHtml += `
+            <div style="flex: 0 0 5%;"></div> </div>
+    `;
+
+    // 2. Generate List HTML (All Speakers)
+    let listHtml = '<h5 style="margin: 10px 0 20px 0; font-weight: 800; color: #2d3748;">All Speakers</h5>';
+    speakers.forEach((s, i) => {
+        listHtml += `
+            <div class="speaker-row" onclick="viewSpeaker(${i})">
+                <img src="${s.img}" class="row-img" onerror="this.src='https://via.placeholder.com/60x60?text=👤'">
+                <div style="flex-grow:1;">
+                    <div style="font-weight:700; color:#1a202c; font-size:1rem;">${s.name}</div>
+                    <div style="font-size:0.75rem; color:var(--converge-teal); font-weight:600;">${s.tag}</div>
+                </div>
+                <div style="color:#cbd5e0; font-size:1.2rem;">›</div>
+            </div>
+        `;
+    });
+
+    // 3. Inject into the DOM
+    container.innerHTML = carouselHtml + listHtml;
+
+    // 4. Auto-Slide Logic
+    const wrapper = document.getElementById('speaker-carousel');
+    let isMoving = true;
+
+    // Clear existing interval to prevent speed-up
+    if (window.carouselInterval) clearInterval(window.carouselInterval);
+
+    window.carouselInterval = setInterval(() => {
+        if (!isMoving) return;
+
+        const card = wrapper.querySelector('.carousel-item-box');
+        if (!card) return;
+
+        const cardWidth = card.offsetWidth + 15; // Width + Margin
+        const maxScroll = wrapper.scrollWidth - wrapper.offsetWidth;
+
+        if (wrapper.scrollLeft >= maxScroll - 10) {
+            wrapper.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+            wrapper.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        }
+    }, 3500); // 3.5 seconds per slide
+
+    // Pause auto-slide if user starts touching it manually
+    wrapper.addEventListener('touchstart', () => isMoving = false);
+    wrapper.addEventListener('touchend', () => {
+        // Resume after 5 seconds of inactivity
+        setTimeout(() => isMoving = true, 5000);
+    });
+}
+
 init();
